@@ -1,11 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mijn Spotify Wrapped</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #tracks { margin-top: 20px; }
+    </style>
 </head>
 <body>
-    
+    <h1>Mijn Spotify Wrapped</h1>
+    <button id="login">Login met Spotify</button>
+    <div id="tracks"></div>
+
+    <script>
+        const CLIENT_ID = 'YOUR_CLIENT_ID'; // Vervang dit door je Client ID
+        const REDIRECT_URI = 'https://heegarthur.github.io/spotify-wrapped/'; // Zorg ervoor dat dit overeenkomt met wat je in het dashboard hebt ingesteld
+        const SCOPES = 'user-top-read';
+
+        document.getElementById('login').addEventListener('click', () => {
+            const authUrl = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(SCOPES)}`;
+            window.location.href = authUrl;
+        });
+
+        // Haal de access token op uit de URL
+        const hash = window.location.hash;
+        if (hash) {
+            const token = hash.split('&')[0].split('=')[1];
+            fetchTopTracks(token);
+        }
+
+        function fetchTopTracks(token) {
+            fetch('https://api.spotify.com/v1/me/top/tracks', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                displayTracks(data.items);
+            })
+            .catch(error => console.error('Error fetching top tracks:', error));
+        }
+
+        function displayTracks(tracks) {
+            const tracksDiv = document.getElementById('tracks');
+            tracks.forEach(track => {
+                const trackElement = document.createElement('div');
+                trackElement.innerHTML = `<strong>${track.name}</strong> - ${track.artists.map(artist => artist.name).join(', ')}`;
+                tracksDiv.appendChild(trackElement);
+            });
+        }
+    </script>
 </body>
 </html>
