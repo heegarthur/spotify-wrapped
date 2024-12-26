@@ -3,15 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijn Spotify Wrapped</title>
+    <title>small spotify wrapped</title>
     <style>
         body { font-family: Arial, sans-serif; }
         #tracks, #artists, #recently-played, #album-info, #playlists { margin-top: 20px; }
+        button {
+            border-color: aqua;
+            border-radius: 10px;
+        }
+        button:hover{
+            background-color: #f5e400;
+            scale: 1.2;
+            border-radius: 13px;
+        }
+        div{
+            color: rgb(48, 0, 0);
+            transition: transform 1s ease-in-out, color 1s ease-in-out ;
+        }
+        div:hover{
+            transform: 	scale(1.4);
+            color: #0f37a7;
+
+
+        }
+        
     </style>
 </head>
 <body>
-    <h1>Mijn Spotify Wrapped</h1>
-    <button id="login">Login met Spotify</button>
+    <h1>my spotify wrapped</h1>
+    <button title="login" type="button" id="login">Login with Spotify</button>
     <div id="tracks"></div>
     <div id="artists"></div>
     <div id="recently-played"></div>
