@@ -21,10 +21,7 @@
             transition: transform 1s ease-in-out, color 1s ease-in-out ;
         }
         div:hover{
-            transform: 	scale(1.1);
             color: #0f37a7;
-
-
         }
         
     </style>
@@ -41,8 +38,8 @@
     <div id="playlists"></div>
 
     <script>
-        const CLIENT_ID = 'd871746f613a4a29ace9148a3ffb81a8'; // Vervang dit door je Client ID
-        const REDIRECT_URI = 'https://heegarthur.github.io/spotify-wrapped/'; // Vervang dit door je Redirect URI
+        const CLIENT_ID = 'd871746f613a4a29ace9148a3ffb81a8'; 
+        const REDIRECT_URI = 'https://heegarthur.github.io/spotify-wrapped/';  //redirect url
         const SCOPES = 'user-top-read user-read-recently-played user-read-playback-state user-read-private';
 
         document.getElementById('login').addEventListener('click', () => {
@@ -50,7 +47,6 @@
             window.location.href = authUrl;
         });
 
-        // Haal de access token op uit de URL
         const hash = window.location.hash;
         if (hash) {
             const token = hash.split('&')[0].split('=')[1];
@@ -80,12 +76,12 @@
 
         function displayTracks(tracks) {
             const tracksDiv = document.getElementById('tracks');
-            tracksDiv.innerHTML = '<h2>Top Tracks</h2>'; // Titel voor de sectie
+            tracksDiv.innerHTML = '<h2>Top Tracks</h2>'; 
             tracks.forEach(track => {
                 const trackElement = document.createElement('div');
                 trackElement.innerHTML = `<strong>${track.name}</strong> - ${track.artists.map(artist => artist.name).join(', ')}`;
                 tracksDiv.appendChild(trackElement);
-                fetchAlbumInfo(track.id, token); // Haal albuminformatie op voor elke track
+                fetchAlbumInfo(track.id, token); 
             });
         }
 
@@ -160,7 +156,7 @@
 
         function displayRecentlyPlayed(tracks) {
             const recentlyPlayedDiv = document.getElementById('recently-played');
-            recentlyPlayedDiv.innerHTML = '<h2>Recent Played Tracks</h2>'; // Titel voor de sectie
+            recentlyPlayedDiv.innerHTML = '<h2>Recent Played Tracks</h2>'; 
             tracks.forEach(item => {
                 const track = item.track;
                 const trackElement = document.createElement('div');
@@ -189,7 +185,7 @@
 
         function displayPlaylists(playlists) {
             const playlistsDiv = document.getElementById('playlists');
-            playlistsDiv.innerHTML = '<h2>Playlists</h2>'; // Titel voor de sectie
+            playlistsDiv.innerHTML = '<h2>Playlists</h2>'; 
             playlists.forEach(playlist => {
                 const playlistElement = document.createElement('div');
                 playlistElement.innerHTML = `<strong>${playlist.name}</strong>`;
